@@ -1,0 +1,407 @@
+definitions:
+  models.Banco:
+    properties:
+      codigo:
+        type: string
+      created_at:
+        type: string
+      cuenta:
+        type: string
+      id:
+        type: string
+      nombre:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  models.Comercio:
+    properties:
+      banco:
+        type: string
+      monto:
+        type: number
+      phone:
+        type: string
+      rif:
+        type: string
+    type: object
+  models.TransaccionInput:
+    properties:
+      Comercio:
+        $ref: '#/definitions/models.Comercio'
+      Usuario:
+        $ref: '#/definitions/models.Usuario'
+    type: object
+  models.User:
+    properties:
+      banco:
+        type: string
+      cedula:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: string
+      nombre:
+        type: string
+      numero:
+        type: string
+      pin:
+        type: string
+      rif:
+        type: string
+      saldo:
+        type: number
+      updated_at:
+        type: string
+    type: object
+  models.Usuario:
+    properties:
+      banco:
+        type: string
+      cedula:
+        type: string
+      phone:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Api para Banking.
+  title: API aplicacion B-Pagos
+  version: "1.0"
+paths:
+  /bancos:
+    get:
+      description: Obtiene una lista de todos los bancos registrados
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Banco'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Lista todos los bancos
+      tags:
+      - bancos
+    post:
+      consumes:
+      - application/json
+      description: Agrega un nuevo banco a la base de datos
+      parameters:
+      - description: Datos del Banco
+        in: body
+        name: banco
+        required: true
+        schema:
+          $ref: '#/definitions/models.Banco'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Banco'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Crea un nuevo banco
+      tags:
+      - bancos
+  /bancos/{id}:
+    delete:
+      description: Elimina un banco específico de la base de datos
+      parameters:
+      - description: ID del Banco
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 'message: Banco eliminado exitosamente'
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Elimina un banco por su ID
+      tags:
+      - bancos
+    get:
+      description: Obtiene detalles de un banco específico por su ID único
+      parameters:
+      - description: ID del Banco
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Banco'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Obtiene un banco por su ID
+      tags:
+      - bancos
+    put:
+      consumes:
+      - application/json
+      description: Actualiza los detalles de un banco específico
+      parameters:
+      - description: ID del Banco
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Datos del Banco Actualizados
+        in: body
+        name: banco
+        required: true
+        schema:
+          $ref: '#/definitions/models.Banco'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Banco'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Actualiza un banco por su ID
+      tags:
+      - bancos
+  /procesar-transaccion:
+    post:
+      consumes:
+      - application/json
+      description: Debida un monto del saldo de un usuario y lo acredita a un comercio
+      parameters:
+      - description: Información de la Transacción
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.TransaccionInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Procesa una transacción entre un usuario y un comercio
+      tags:
+      - transacciones
+  /usuarios:
+    get:
+      description: Obtiene una lista de todos los usuarios registrados
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.User'
+            type: array
+        "500":
+          description: Error al obtener los usuarios
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Lista todos los usuarios
+      tags:
+      - usuarios
+    post:
+      consumes:
+      - application/json
+      description: Agrega un nuevo usuario a la base de datos
+      parameters:
+      - description: Datos del Usuario
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Datos de usuario no válidos
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Error al crear el usuario
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Crea un nuevo usuario
+      tags:
+      - usuarios
+  /usuarios/{id}:
+    delete:
+      description: Elimina un usuario específico de la base de datos
+      parameters:
+      - description: ID del Usuario
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 'message: Usuario eliminado exitosamente'
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: ID de usuario no válido
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Error al eliminar el usuario
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Elimina un usuario por su ID
+      tags:
+      - usuarios
+    get:
+      description: Obtiene detalles de un usuario específico por su ID único
+      parameters:
+      - description: ID del Usuario
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: ID de usuario no válido
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Usuario no encontrado
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Obtiene un usuario por su ID
+      tags:
+      - usuarios
+    put:
+      consumes:
+      - application/json
+      description: Actualiza los detalles de un usuario específico
+      parameters:
+      - description: ID del Usuario
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Datos del Usuario Actualizados
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Datos de usuario no válidos
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Error al actualizar el usuario
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Actualiza un usuario por su ID
+      tags:
+      - usuarios
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
