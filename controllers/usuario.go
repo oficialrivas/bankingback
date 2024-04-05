@@ -136,3 +136,33 @@ func DeleteUser(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"message": "Usuario eliminado exitosamente"})
 }
+
+// GetUserByNameAndPin godoc
+// @Summary Obtiene un usuario por su nombre y PIN
+// @Description Obtiene detalles de un usuario específico por su nombre y PIN
+// @Tags usuarios
+// @Accept json
+// @Produce json
+// @Param nombre query string true "Nombre del Usuario"
+// @Param pin query string true "PIN del Usuario"
+// @Success 200 {object} models.User
+// @Failure 400 {object} map[string]interface{} "Consulta inválida"
+// @Failure 404 {object} map[string]interface{} "Usuario no encontrado o PIN incorrecto"
+// @Router /users/query [get]
+func GetUserByNameAndPin(c *gin.Context) {
+    nombre := c.Query("nombre")
+    pin := c.Query("pin")
+
+    if nombre == "" || pin == "" {
+        c.JSON(http.StatusBadRequest, gin.H{"error": "Consulta inválida, nombre y PIN son requeridos"})
+        return
+    }
+
+    var user models.User
+    if err := configs.DB.Where("nombre = ? AND pin = ?", nombre, pin).First(&user).Error; err != nil {
+        c.JSON(http.StatusNotFound, gin.H{"error": "Usuario no encontrado o PIN incorrecto"})
+        return
+    }
+
+    c.JSON(http.StatusOK, user)
+}

@@ -1,0 +1,43 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres:16.2-alpine
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - postgres_data_banking:/var/lib/postgresql/data
+      # - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      # Asegúrate de agregar la siguiente línea si estás usando un nuevo archivo SQL
+      # - ./create-uuid-extension.sql:/docker-entrypoint-initdb.d/create-uuid-extension.sql
+    ports:
+      - "5432:5432"
+  adminer:
+    image: adminer
+    ports:
+      - 8002:8080
+
+  myapp:
+    build: .
+    ports:
+      - 8081:8081
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.goapp.rule=Host(`0.0.0.0`)
+      - traefik.http.routers.goapp.entrypoints=websecure
+    environment:
+      DB_HOST: postgres
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      DB_PORT: ${DB_PORT}
+      DB_SSLMODE: ${DB_SSLMODE}
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data_banking:

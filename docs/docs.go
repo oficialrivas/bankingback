@@ -285,6 +285,59 @@ const docTemplate = `{
                 }
             }
         },
+        "/users/query": {
+            "get": {
+                "description": "Obtiene detalles de un usuario específico por su nombre y PIN",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "usuarios"
+                ],
+                "summary": "Obtiene un usuario por su nombre y PIN",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Nombre del Usuario",
+                        "name": "nombre",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "PIN del Usuario",
+                        "name": "pin",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.User"
+                        }
+                    },
+                    "400": {
+                        "description": "Consulta inválida",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado o PIN incorrecto",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
         "/usuarios": {
             "get": {
                 "description": "Obtiene una lista de todos los usuarios registrados",
@@ -614,7 +667,7 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "localhost:8080",
+	Host:             "localhost:8081",
 	BasePath:         "",
 	Schemes:          []string{},
 	Title:            "API aplicacion B-Pagos",

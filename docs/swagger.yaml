@@ -64,7 +64,7 @@ definitions:
       phone:
         type: string
     type: object
-host: localhost:8080
+host: localhost:8081
 info:
   contact: {}
   description: Api para Banking.
@@ -254,6 +254,42 @@ paths:
       summary: Procesa una transacción entre un usuario y un comercio
       tags:
       - transacciones
+  /users/query:
+    get:
+      consumes:
+      - application/json
+      description: Obtiene detalles de un usuario específico por su nombre y PIN
+      parameters:
+      - description: Nombre del Usuario
+        in: query
+        name: nombre
+        required: true
+        type: string
+      - description: PIN del Usuario
+        in: query
+        name: pin
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Consulta inválida
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Usuario no encontrado o PIN incorrecto
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Obtiene un usuario por su nombre y PIN
+      tags:
+      - usuarios
   /usuarios:
     get:
       description: Obtiene una lista de todos los usuarios registrados

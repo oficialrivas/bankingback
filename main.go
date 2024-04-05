@@ -16,7 +16,7 @@ import (
 // @title API aplicacion B-Pagos
 // @description Api para Banking.
 // @version 1.0
-// @host localhost:8080
+// @host localhost:8081
 // @securityDefinitions.apikey ApiKeyAuth
 // @in header
 // @name Authorization
@@ -46,14 +46,13 @@ func main() {
 	routes.BancoRouter(r)
 	routes.TransaccionRouter(r) // Asumiendo que esta función acepta *gin.Engine y configura las rutas
 
-	// Configura el endpoint para Swagger UI utilizando gin-swagger
-    url := ginSwagger.URL("http://localhost:8080/swagger/doc.json")
-	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
+	
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	// Inicia el servidor
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8080" // Puerto por defecto si no está definido en las variables de entorno
+		port = "8081" // Puerto por defecto si no está definido en las variables de entorno
 	}
 	r.Run(":" + port)
 }

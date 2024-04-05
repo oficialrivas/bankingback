@@ -6,7 +6,7 @@
         "contact": {},
         "version": "1.0"
     },
-    "host": "localhost:8080",
+    "host": "localhost:8081",
     "paths": {
         "/bancos": {
             "get": {
@@ -270,6 +270,59 @@
                     },
                     "500": {
                         "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/users/query": {
+            "get": {
+                "description": "Obtiene detalles de un usuario específico por su nombre y PIN",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "usuarios"
+                ],
+                "summary": "Obtiene un usuario por su nombre y PIN",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Nombre del Usuario",
+                        "name": "nombre",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "PIN del Usuario",
+                        "name": "pin",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.User"
+                        }
+                    },
+                    "400": {
+                        "description": "Consulta inválida",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado o PIN incorrecto",
                         "schema": {
                             "type": "object",
                             "additionalProperties": true

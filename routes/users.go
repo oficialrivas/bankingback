@@ -13,6 +13,7 @@ func UserRouter(router *gin.Engine) {
         api.GET("/users/:id", controllers.GetUserByID)
         api.PUT("/users/:id", controllers.UpdateUser)
         api.DELETE("/users/:id", controllers.DeleteUser)
+        api.GET("/users/query", controllers.GetUserByNameAndPin)
     }
 }
 
