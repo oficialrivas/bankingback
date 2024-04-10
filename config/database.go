@@ -6,7 +6,6 @@ import (
 	"log"
 	"os"
 
-	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -15,10 +14,8 @@ var DB *gorm.DB
 
 func init() {
 	// Cargar el archivo .env
-	err := godotenv.Load() // Carga las variables de entorno desde el archivo .env
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
+	fmt.Println("Cargando configuracion ENV")
+	fmt.Println(os.Getenv("DB_HOST"))
 }
 
 func ConnectToDB() {

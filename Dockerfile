@@ -18,7 +18,6 @@ FROM scratch
 
 # Copia el ejecutable a la imagen final
 COPY --from=builder /app/main .
-COPY --from=builder /app/.env .
 # Expone el puerto 8080
 EXPOSE 8080
 

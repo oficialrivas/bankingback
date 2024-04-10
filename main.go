@@ -4,12 +4,10 @@ import (
 	configs "banking/config" // Asegúrate de que este sea el nombre correcto de tu paquete de configuración
 	_ "banking/docs"         // Importa tu documentación de Swagger generada aquí
 	"banking/routes"
-	"log"
 	"os"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 	swaggerFiles "github.com/swaggo/files"     // Archivos estáticos para Swagger
 	ginSwagger "github.com/swaggo/gin-swagger" // Gin-swagger para la documentación de la API
 )
@@ -22,11 +20,6 @@ import (
 // @in header
 // @name Authorization
 func main() {
-	// Cargar variables de entorno desde .env
-	if err := godotenv.Load(); err != nil {
-		log.Fatalf("Error loading .env file: %v", err)
-	}
-
 	// Establece la conexión a la base de datos
 	configs.ConnectToDB()
 
