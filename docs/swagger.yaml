@@ -28,9 +28,9 @@ definitions:
   models.TransaccionInput:
     properties:
       Comercio:
-        $ref: '#/definitions/models.Comercio'
+        $ref: "#/definitions/models.Comercio"
       Usuario:
-        $ref: '#/definitions/models.Usuario'
+        $ref: "#/definitions/models.Usuario"
     type: object
   models.User:
     properties:
@@ -64,7 +64,7 @@ definitions:
       phone:
         type: string
     type: object
-host: localhost:8081
+host: banking.nexus369.net
 info:
   contact: {}
   description: Api para Banking.
@@ -75,13 +75,13 @@ paths:
     get:
       description: Obtiene una lista de todos los bancos registrados
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.Banco'
+              $ref: "#/definitions/models.Banco"
             type: array
         "500":
           description: Internal Server Error
@@ -90,25 +90,25 @@ paths:
             type: object
       summary: Lista todos los bancos
       tags:
-      - bancos
+        - bancos
     post:
       consumes:
-      - application/json
+        - application/json
       description: Agrega un nuevo banco a la base de datos
       parameters:
-      - description: Datos del Banco
-        in: body
-        name: banco
-        required: true
-        schema:
-          $ref: '#/definitions/models.Banco'
+        - description: Datos del Banco
+          in: body
+          name: banco
+          required: true
+          schema:
+            $ref: "#/definitions/models.Banco"
       produces:
-      - application/json
+        - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/models.Banco'
+            $ref: "#/definitions/models.Banco"
         "400":
           description: Bad Request
           schema:
@@ -121,21 +121,21 @@ paths:
             type: object
       summary: Crea un nuevo banco
       tags:
-      - bancos
+        - bancos
   /bancos/{id}:
     delete:
       description: Elimina un banco específico de la base de datos
       parameters:
-      - description: ID del Banco
-        in: path
-        name: id
-        required: true
-        type: string
+        - description: ID del Banco
+          in: path
+          name: id
+          required: true
+          type: string
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
-          description: 'message: Banco eliminado exitosamente'
+          description: "message: Banco eliminado exitosamente"
           schema:
             additionalProperties: true
             type: object
@@ -151,22 +151,22 @@ paths:
             type: object
       summary: Elimina un banco por su ID
       tags:
-      - bancos
+        - bancos
     get:
       description: Obtiene detalles de un banco específico por su ID único
       parameters:
-      - description: ID del Banco
-        in: path
-        name: id
-        required: true
-        type: string
+        - description: ID del Banco
+          in: path
+          name: id
+          required: true
+          type: string
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.Banco'
+            $ref: "#/definitions/models.Banco"
         "400":
           description: Bad Request
           schema:
@@ -179,30 +179,30 @@ paths:
             type: object
       summary: Obtiene un banco por su ID
       tags:
-      - bancos
+        - bancos
     put:
       consumes:
-      - application/json
+        - application/json
       description: Actualiza los detalles de un banco específico
       parameters:
-      - description: ID del Banco
-        in: path
-        name: id
-        required: true
-        type: string
-      - description: Datos del Banco Actualizados
-        in: body
-        name: banco
-        required: true
-        schema:
-          $ref: '#/definitions/models.Banco'
+        - description: ID del Banco
+          in: path
+          name: id
+          required: true
+          type: string
+        - description: Datos del Banco Actualizados
+          in: body
+          name: banco
+          required: true
+          schema:
+            $ref: "#/definitions/models.Banco"
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.Banco'
+            $ref: "#/definitions/models.Banco"
         "400":
           description: Bad Request
           schema:
@@ -215,21 +215,21 @@ paths:
             type: object
       summary: Actualiza un banco por su ID
       tags:
-      - bancos
+        - bancos
   /procesar-transaccion:
     post:
       consumes:
-      - application/json
+        - application/json
       description: Debida un monto del saldo de un usuario y lo acredita a un comercio
       parameters:
-      - description: Información de la Transacción
-        in: body
-        name: input
-        required: true
-        schema:
-          $ref: '#/definitions/models.TransaccionInput'
+        - description: Información de la Transacción
+          in: body
+          name: input
+          required: true
+          schema:
+            $ref: "#/definitions/models.TransaccionInput"
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
@@ -253,30 +253,30 @@ paths:
             type: object
       summary: Procesa una transacción entre un usuario y un comercio
       tags:
-      - transacciones
+        - transacciones
   /users/query:
     get:
       consumes:
-      - application/json
+        - application/json
       description: Obtiene detalles de un usuario específico por su nombre y PIN
       parameters:
-      - description: Nombre del Usuario
-        in: query
-        name: nombre
-        required: true
-        type: string
-      - description: PIN del Usuario
-        in: query
-        name: pin
-        required: true
-        type: string
+        - description: Nombre del Usuario
+          in: query
+          name: nombre
+          required: true
+          type: string
+        - description: PIN del Usuario
+          in: query
+          name: pin
+          required: true
+          type: string
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.User'
+            $ref: "#/definitions/models.User"
         "400":
           description: Consulta inválida
           schema:
@@ -289,18 +289,18 @@ paths:
             type: object
       summary: Obtiene un usuario por su nombre y PIN
       tags:
-      - usuarios
+        - usuarios
   /usuarios:
     get:
       description: Obtiene una lista de todos los usuarios registrados
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.User'
+              $ref: "#/definitions/models.User"
             type: array
         "500":
           description: Error al obtener los usuarios
@@ -309,25 +309,25 @@ paths:
             type: object
       summary: Lista todos los usuarios
       tags:
-      - usuarios
+        - usuarios
     post:
       consumes:
-      - application/json
+        - application/json
       description: Agrega un nuevo usuario a la base de datos
       parameters:
-      - description: Datos del Usuario
-        in: body
-        name: user
-        required: true
-        schema:
-          $ref: '#/definitions/models.User'
+        - description: Datos del Usuario
+          in: body
+          name: user
+          required: true
+          schema:
+            $ref: "#/definitions/models.User"
       produces:
-      - application/json
+        - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/models.User'
+            $ref: "#/definitions/models.User"
         "400":
           description: Datos de usuario no válidos
           schema:
@@ -340,21 +340,21 @@ paths:
             type: object
       summary: Crea un nuevo usuario
       tags:
-      - usuarios
+        - usuarios
   /usuarios/{id}:
     delete:
       description: Elimina un usuario específico de la base de datos
       parameters:
-      - description: ID del Usuario
-        in: path
-        name: id
-        required: true
-        type: string
+        - description: ID del Usuario
+          in: path
+          name: id
+          required: true
+          type: string
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
-          description: 'message: Usuario eliminado exitosamente'
+          description: "message: Usuario eliminado exitosamente"
           schema:
             additionalProperties: true
             type: object
@@ -370,22 +370,22 @@ paths:
             type: object
       summary: Elimina un usuario por su ID
       tags:
-      - usuarios
+        - usuarios
     get:
       description: Obtiene detalles de un usuario específico por su ID único
       parameters:
-      - description: ID del Usuario
-        in: path
-        name: id
-        required: true
-        type: string
+        - description: ID del Usuario
+          in: path
+          name: id
+          required: true
+          type: string
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.User'
+            $ref: "#/definitions/models.User"
         "400":
           description: ID de usuario no válido
           schema:
@@ -398,30 +398,30 @@ paths:
             type: object
       summary: Obtiene un usuario por su ID
       tags:
-      - usuarios
+        - usuarios
     put:
       consumes:
-      - application/json
+        - application/json
       description: Actualiza los detalles de un usuario específico
       parameters:
-      - description: ID del Usuario
-        in: path
-        name: id
-        required: true
-        type: string
-      - description: Datos del Usuario Actualizados
-        in: body
-        name: user
-        required: true
-        schema:
-          $ref: '#/definitions/models.User'
+        - description: ID del Usuario
+          in: path
+          name: id
+          required: true
+          type: string
+        - description: Datos del Usuario Actualizados
+          in: body
+          name: user
+          required: true
+          schema:
+            $ref: "#/definitions/models.User"
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.User'
+            $ref: "#/definitions/models.User"
         "400":
           description: Datos de usuario no válidos
           schema:
@@ -434,7 +434,7 @@ paths:
             type: object
       summary: Actualiza un usuario por su ID
       tags:
-      - usuarios
+        - usuarios
 securityDefinitions:
   ApiKeyAuth:
     in: header
