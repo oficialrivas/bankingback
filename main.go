@@ -45,7 +45,7 @@ func main() {
 	// Inicia el servidor
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8081" // Puerto por defecto si no está definido en las variables de entorno
+		port = "8080" // Puerto por defecto si no está definido en las variables de entorno
 	}
 	r.Run(":" + port)
 }
