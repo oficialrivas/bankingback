@@ -15,7 +15,7 @@ var DB *gorm.DB
 func init() {
 	// Cargar el archivo .env
 	fmt.Println("Cargando configuracion ENV")
-	fmt.Println(os.Getenv("DB_HOST"))
+	fmt.Println(os.Getenv("DB_HOST") + "-" + os.Getenv("DB_USER"))
 }
 
 func ConnectToDB() {
