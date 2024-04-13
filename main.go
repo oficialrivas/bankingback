@@ -25,8 +25,7 @@ func main() {
 
 	r := gin.Default()
 
-	// Establecer los proxies de confianza
-	r.SetTrustedProxies([]string{"127.0.0.1"}) // Especifica aquí las direcciones IP de tus proxies confiables
+	
 
 	// Configuración de CORS
 	config := cors.DefaultConfig()
