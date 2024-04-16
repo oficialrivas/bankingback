@@ -26,6 +26,8 @@ func ProcesarTransaccion(c *gin.Context) {
 
 	// Intenta vincular el JSON de entrada a la estructura TransaccionInput
 	if err := c.ShouldBindJSON(&input); err != nil {
+		fmt.Println(c.Request.Body)
+		fmt.Println("Error parseando json")
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
